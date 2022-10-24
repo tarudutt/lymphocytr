@@ -1,0 +1,72 @@
+---
+title: "lymphocytr"
+author: "Taru Dutt and Brooke Anderson"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lymphocytr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## About lymphocytr
+
+lymphocytr is a package to create correlation plots and correlation matrices. The idea of creating lymphocytr begin when I was working with COVID-19 patients and with different research groups. The predominant read out with human patients that scientists want to evaluate is to correlate viral toters or metabolites with immune responses. Since, with human research, the data is vast and hard to organize due to many people involved. Therefore, I wanted to create a pipeline, which everyone can use easily and which also help them arrange the data in a meaningful way. 
+
+## Styles
+
+    output: 
+      rmarkdown::html_vignette:
+        css: mystyles.css
+
+## Load package
+
+```{r}
+library(devtools)
+library(lymphocytr)
+```
+
+## How to run your data
+
+### Read data
+Read_data function in the package reads your data and also makes the data "tidy". It is important that you arrange the data in the format where your cell types will be in one excel sheet and your variable (for example: viral titer, colony forming units, metabolites, age , BMI, etc) can be in the other sheet. This format helps you in arrange your data in a more organized way. 
+
+```{r}
+combined_data <- system.file("extdata", "correlation_data.xlsx", package = "lymphocytr", mustWork = FALSE)
+combined_data <- read_data(combined_data)
+head(combined_data)
+```
+
+### Make correlation plots using scatterplot function
+
+We will evaluate the correlation plots between immune cell populations and bacterial burden (colony forming units) in the lungs. The correlation plots informs us about the immune populations, which are causing negative or positive effect on the disease severity. If a population has a negative "R" value, that means it has a negative slope with respect to bacterial burden. This means that if that particular immune cell population increases, the bacterial burden decreases and vice-versa. These correlation plots are very helpful in predicting the outcome of the disease severity in case of human populations. 
+
+```{r, fig.width=12, fig.height=14}
+# compressing cell names to one strip
+
+combined_data$name <- fit_cellname(combined_data$name)
+
+# Plot graphs
+
+scatterPlot(combined_data) 
+```
+
+## Correlation matrix
+
+To further evaluate the interaction between each cell type along with bacterial burden, we will plot correlation matrix. 
+Correlation matrix will calculate the correlation coefficient between not just CFU (or any other variable) and cell types, but also among different cells. 
+
+```{r, fig.width=10, fig.height=10}
+
+correlation_plot <- system.file("inst:extdata", "correlation_data.xlsx", package = "lymphocytr", mustWork = TRUE)
+correlation_plot <- correlation_matrix(correlation_plot)
+```
+

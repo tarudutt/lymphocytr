@@ -1,0 +1,31 @@
+Package: lymphocytr
+Title: Plot and Perform Statistical Analysis of the Immune Cell Populations 
+Version: 0.0.0.9000
+Authors@R: 
+    c(person("Taru", "Dutt", , "taru.s.dutt@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-5101-1311")), person("Brooke", "Anderson", , 
+           "Brooke.Anderson@colostate.edu", role = c("aut"),
+           comment = c(ORCID = "0000-0002-5012-9035")))
+Description: lymphocytr cleans the percentage or total cell count data obtained 
+    from either flow cytometry and single cell sequencing experiments. This package 
+    also plot the graphs and perform the statistical analysis to compare the significant 
+    differences between the various treatment groups.
+License: GPL (>=2)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Imports: 
+    ggplot2,
+    readxl,
+    sp,
+    tidyr,
+    ggpubr,
+    corrplot,
+    magrittr,
+    dplyr
+Suggests: 
+    rmarkdown,
+    knitr,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
